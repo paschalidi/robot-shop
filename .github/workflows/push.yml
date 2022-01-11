@@ -2,7 +2,7 @@ name: docker-compose-actions-workflow
 on:
   pull_request:
     branches:
-      - *
+      - '*'
     paths-ignore:
       - 'K8s/**'
       - 'load-gen/**'
