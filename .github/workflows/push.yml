@@ -28,4 +28,4 @@ jobs:
           location: us-central1-c
 
       - id: get-pods
-        run: kubectl get pods
+        run: kubectl get all
