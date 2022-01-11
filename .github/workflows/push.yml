@@ -7,6 +7,10 @@ on:
       - 'K8s/**'
       - 'load-gen/**'
 
+permissions:
+  contents: 'read'
+  id-token: 'write'
+
 jobs:
   test:
     runs-on: ubuntu-latest
