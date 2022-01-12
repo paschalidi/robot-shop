@@ -37,7 +37,11 @@ jobs:
           gcloud auth configure-docker -q
           cd cart/
           ls
-          docker build -t $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA -t $GCP_REGISTRY/$SERVICE_NAME:latest .
+          docker build \
+            --cache-from $GCP_REGISTRY/$SERVICE_NAME:latest \
+            -t $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA \
+            -t $GCP_REGISTRY/$SERVICE_NAME:latest \
+            .
           docker push $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA
           docker push $GCP_REGISTRY/$SERVICE_NAME:latest
 
