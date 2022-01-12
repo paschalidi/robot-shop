@@ -16,7 +16,7 @@ permissions:
 jobs:
   push-on-gcr:
     env:
-      GCP_REGISTRY: 'eu.gcr.io/robot-shop-337906'
+      GCP_REGISTRY: 'gcr.io/robot-shop-337906'
       SERVICE_NAME: 'robot-shop-cart'
     runs-on: ubuntu-latest
     steps:
