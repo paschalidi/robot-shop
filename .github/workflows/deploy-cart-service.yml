@@ -4,6 +4,7 @@ on:
     branches:
       - '*'
     paths:
+      - '.github/workflows/deploy-cart-service.yml'
       - 'cart/**'
       - '!K8s/**'
       - '!load-gen/**'
@@ -30,10 +31,11 @@ jobs:
         name: Docker Push
         run: |-
           gcloud auth configure-docker -q
-          docker build --build-arg \
+          docker build \
+            --build-arg \
             -t $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA \
             -t $GCP_REGISTRY/$SERVICE_NAME:latest \
-            .
+            -f /cart/Dockerfile
           docker push $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA
           docker push $GCP_REGISTRY/$SERVICE_NAME:latest
 
