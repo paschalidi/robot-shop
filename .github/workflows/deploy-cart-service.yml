@@ -35,11 +35,13 @@ jobs:
         name: Docker Push
         run: |-
           gcloud auth configure-docker -q
+          cd cart/
+          ls
           docker build \
             --build-arg \
             -t $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA \
             -t $GCP_REGISTRY/$SERVICE_NAME:latest \
-            -f ./cart/Dockerfile
+            -f .
           docker push $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA
           docker push $GCP_REGISTRY/$SERVICE_NAME:latest
 
