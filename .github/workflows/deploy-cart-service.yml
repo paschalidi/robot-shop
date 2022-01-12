@@ -1,0 +1,39 @@
+name: docker-compose-actions-workflow
+on:
+  pull_request:
+    branches:
+      - '*'
+    paths:
+      - 'cart/**'
+      - '!K8s/**'
+      - '!load-gen/**'
+
+permissions:
+  contents: 'read'
+  id-token: 'write'
+
+jobs:
+  push-on-gcr:
+    env:
+      GCP_REGISTRY: 'eu.gcr.io/robot-shop-337906'
+      SERVICE_NAME: 'robot-shop-cart'
+    runs-on: ubuntu-latest
+    steps:
+      - id: auth
+        name: Auth Google Cloud
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          workload_identity_provider: 'projects/962672166969/locations/global/workloadIdentityPools/robot-shop/providers/robot-shop'
+          service_account: 'gh-actions-actor@robot-shop-337906.iam.gserviceaccount.com'
+
+      - id: docker-push
+        name: Docker Push
+        run: |-
+          gcloud auth configure-docker -q
+          docker build --build-arg \
+            -t $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA \
+            -t $GCP_REGISTRY/$SERVICE_NAME:latest \
+            .
+          docker push $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA
+          docker push $GCP_REGISTRY/$SERVICE_NAME:latest
+

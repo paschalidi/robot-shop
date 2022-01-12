@@ -126,3 +126,11 @@ $ curl http://<host>:8080/api/cart/metrics
 $ curl http://<host>:8080/api/payment/metrics
 ```
 
+## Enable the gh actions 
+
+https://cloud.google.com/blog/products/identity-security/enabling-keyless-authentication-from-github-actions
+
+GIve the actor permissions to handle k8s 
+```bash
+gcloud projects add-iam-policy-binding ${PROJECT_ID} --role=roles/container.developer --member=serviceAccount:gh-actions-actor@robot-shop-337906.iam.gserviceaccount.com
+```
