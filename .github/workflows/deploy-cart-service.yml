@@ -15,6 +15,7 @@ permissions:
 
 jobs:
   push-on-gcr:
+    name: Upload to GCR
     env:
       GCP_REGISTRY: 'gcr.io/robot-shop-337906'
       SERVICE_NAME: 'robot-shop-cart'
@@ -35,7 +36,7 @@ jobs:
             --build-arg \
             -t $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA \
             -t $GCP_REGISTRY/$SERVICE_NAME:latest \
-            -f /cart/Dockerfile
+            -f ./cart/Dockerfile
           docker push $GCP_REGISTRY/$SERVICE_NAME:$GITHUB_SHA
           docker push $GCP_REGISTRY/$SERVICE_NAME:latest
 
