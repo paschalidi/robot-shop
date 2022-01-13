@@ -1,25 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-fix
+  name: cart
   labels:
-    service: payment
-    stage: test
+    service: cart
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: payment
-      stage: test
+      service: cart
   template:
     metadata:
       labels:
-        service: payment
-        stage: test
+        service: cart
     spec:
       containers:
-      - name: payment-fix
-        image: robotshop/rs-payment-fix:latest
+      - name: cart
+        imagePullPolicy: IfNotPresent
+        image: gcr.io/robot-shop-337906/robot-shop-cart
         # agent networking access
         env:
           - name: INSTANA_AGENT_HOST
@@ -35,4 +33,3 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
-      restartPolicy: Always
