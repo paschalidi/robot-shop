@@ -51,9 +51,9 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy Development
         run: |-
-          cd cart/ops/
+          cd cart/ops/overlays/dev
           ls
           kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
-          kustomize build ./dev | kubectl apply -f -
+          kustomize build . | kubectl apply -f -
           kubectl rollout status deployment $IMAGE
           kubectl get services -o wide
