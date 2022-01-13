@@ -60,7 +60,7 @@ jobs:
         run: |-
           cd cart/ops/overlays/dev
           ls
-          kubectl config view
+          kubectl get services -o wide
           kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
           kustomize build . | kubectl apply -f -
           kubectl rollout status deployment $IMAGE
