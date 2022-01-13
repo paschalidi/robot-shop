@@ -5,7 +5,6 @@ metadata:
   labels:
     service: cart
 spec:
-  replicas: 1
   selector:
     matchLabels:
       service: cart
@@ -15,21 +14,15 @@ spec:
         service: cart
     spec:
       containers:
-      - name: cart
-        imagePullPolicy: IfNotPresent
-        image: gcr.io/robot-shop-337906/robot-shop-cart
-        # agent networking access
-        env:
-          - name: INSTANA_AGENT_HOST
-            valueFrom:
-              fieldRef:
-                fieldPath: status.hostIP
-        ports:
-        - containerPort: 8080
-        resources:
-          limits:
-            cpu: 200m
-            memory: 100Mi
-          requests:
-            cpu: 100m
-            memory: 50Mi
+        - name: cart
+          imagePullPolicy: IfNotPresent
+          image: gcr.io/robot-shop-337906/robot-shop-cart
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 200m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
