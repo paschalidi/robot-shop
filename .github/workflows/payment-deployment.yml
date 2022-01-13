@@ -4,8 +4,8 @@ on:
     branches:
       - '*'
     paths:
-      - '.github/workflows/deploy-cart-service.yml'
-      - 'cart/**'
+      - '.github/workflows/payment-deployment.yml'
+      - 'payment/**'
       - '!K8s/**'
       - '!load-gen/**'
 
@@ -15,7 +15,7 @@ permissions:
 
 env:
   GCP_REGISTRY: 'gcr.io/robot-shop-337906'
-  IMAGE: 'robot-shop-cart'
+  IMAGE: 'robot-shop-payment'
 
 jobs:
   release:
@@ -36,7 +36,7 @@ jobs:
         name: GCR Push
         run: |-
           gcloud auth configure-docker -q
-          cd cart/
+          cd payment/
           ls
           docker build \
             --cache-from $GCP_REGISTRY/$IMAGE:latest \
@@ -46,44 +46,9 @@ jobs:
           docker push $GCP_REGISTRY/$IMAGE:$GITHUB_SHA
           docker push $GCP_REGISTRY/$IMAGE:latest
 
-  deploy-dev:
-    needs:
-      - release
-
-    name: Deploy Development Env
-    runs-on: ubuntu-latest
-    steps:
-      - id: checkout-repo
-        uses: actions/checkout@v2
-
-      - id: auth
-        name: GCP Auth
-        uses: google-github-actions/auth@v0.4.0
-        with:
-          workload_identity_provider: 'projects/962672166969/locations/global/workloadIdentityPools/robot-shop/providers/robot-shop'
-          service_account: 'gh-actions-actor@robot-shop-337906.iam.gserviceaccount.com'
-
-      - name: Set up Kustomize
-        uses: imranismail/setup-kustomize@v1
-
-      - name: Get Cluster Credentials
-        id: get-gke-credentials
-        uses: google-github-actions/get-gke-credentials@v0.4.0
-        with:
-          cluster_name: development-cluster
-          location: us-central1-c
-
-      - name: Deploy Development
-        run: |-
-          cd cart/ops/overlays/dev
-          kubectl get services -o wide
-          kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
-          kustomize build . | kubectl apply -f -
-          kubectl get services -o wide
-
   deploy-prod:
     needs:
-      - deploy-dev
+      - release
 
     name: Deploy Production Env
     runs-on: ubuntu-latest
@@ -110,7 +75,7 @@ jobs:
 
       - name: Deploy Development
         run: |-
-          cd cart/ops/overlays/prod
+          cd payment/ops/overlays/prod
           kubectl get services -o wide
           kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
           kustomize build . | kubectl apply -f -

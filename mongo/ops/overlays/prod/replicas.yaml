@@ -1,6 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cart
+  name: mongodb
 spec:
-  replicas: 1
+  replicas: 2

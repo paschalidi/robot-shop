@@ -1,0 +1,82 @@
+name: docker-compose-actions-workflow
+on:
+  pull_request:
+    branches:
+      - '*'
+    paths:
+      - '.github/workflows/shipping-deployment.yml'
+      - 'shipping/**'
+      - '!K8s/**'
+      - '!load-gen/**'
+
+permissions:
+  contents: 'read'
+  id-token: 'write'
+
+env:
+  GCP_REGISTRY: 'gcr.io/robot-shop-337906'
+  IMAGE: 'robot-shop-cart'
+
+jobs:
+  release:
+    name: Release Docker Images
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout-repo
+        uses: actions/checkout@v2
+
+      - id: auth
+        name: GCP Auth
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          workload_identity_provider: 'projects/962672166969/locations/global/workloadIdentityPools/robot-shop/providers/robot-shop'
+          service_account: 'gh-actions-actor@robot-shop-337906.iam.gserviceaccount.com'
+
+      - id: container-registry-push
+        name: GCR Push
+        run: |-
+          gcloud auth configure-docker -q
+          cd shipping/
+          ls
+          docker build \
+            --cache-from $GCP_REGISTRY/$IMAGE:latest \
+            -t $GCP_REGISTRY/$IMAGE:$GITHUB_SHA \
+            -t $GCP_REGISTRY/$IMAGE:latest \
+            .
+          docker push $GCP_REGISTRY/$IMAGE:$GITHUB_SHA
+          docker push $GCP_REGISTRY/$IMAGE:latest
+
+  deploy-prod:
+    needs:
+      - release
+
+    name: Deploy Production Env
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout-repo
+        uses: actions/checkout@v2
+
+      - id: auth
+        name: GCP Auth
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          workload_identity_provider: 'projects/962672166969/locations/global/workloadIdentityPools/robot-shop/providers/robot-shop'
+          service_account: 'gh-actions-actor@robot-shop-337906.iam.gserviceaccount.com'
+
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v1
+
+      - name: Get Cluster Credentials
+        id: get-gke-credentials
+        uses: google-github-actions/get-gke-credentials@v0.4.0
+        with:
+          cluster_name: production-cluster
+          location: us-central1-c
+
+      - name: Deploy Development
+        run: |-
+          cd shipping/ops/overlays/prod
+          kubectl get services -o wide
+          kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
+          kustomize build . | kubectl apply -f -
+          kubectl get services -o wide
