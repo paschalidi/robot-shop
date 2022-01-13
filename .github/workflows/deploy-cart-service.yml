@@ -52,6 +52,7 @@ jobs:
       - name: Deploy Development
         run: |-
           cd cart/ops/
+          ls
           kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
           kustomize build ./dev | kubectl apply -f -
           kubectl rollout status deployment $IMAGE
