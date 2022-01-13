@@ -66,11 +66,11 @@ jobs:
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v1
 
-      - name: Set up GKE Credentials
+      - name: Get Cluster Credentials
         id: get-gke-credentials
         uses: google-github-actions/get-gke-credentials@v0.4.0
         with:
-          cluster_name: robot-cluster
+          cluster_name: development-cluster
           location: us-central1-c
 
       - name: Deploy Development
@@ -101,16 +101,16 @@ jobs:
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v1
 
-      - name: Set up GKE Credentials
+      - name: Get Cluster Credentials
         id: get-gke-credentials
         uses: google-github-actions/get-gke-credentials@v0.4.0
         with:
-          cluster_name: robot-cluster
+          cluster_name: production-cluster
           location: us-central1-c
 
       - name: Deploy Development
         run: |-
-          cd cart/ops/overlays/dev
+          cd cart/ops/overlays/prod
           kubectl get services -o wide
           kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
           kustomize build . | kubectl apply -f -
