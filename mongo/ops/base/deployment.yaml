@@ -13,7 +13,7 @@ spec:
       labels:
         service: mongodb
     spec:
-      serviceAccountName: robot-shop
+      serviceAccountName: default
       containers:
       - name: mongodb
         imagePullPolicy: IfNotPresent

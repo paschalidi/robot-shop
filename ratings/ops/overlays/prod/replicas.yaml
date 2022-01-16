@@ -3,4 +3,4 @@ kind: Deployment
 metadata:
   name: ratings
 spec:
-  replicas: 2
+  replicas: 1

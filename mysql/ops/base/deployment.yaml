@@ -5,7 +5,6 @@ metadata:
   labels:
     service: mysql
 spec:
-  replicas: 1
   selector:
     matchLabels:
       service: mysql
@@ -14,7 +13,7 @@ spec:
       labels:
         service: mysql
     spec:
-      serviceAccountName: robot-shop
+      serviceAccountName: default
       containers:
       - name: mysql
         imagePullPolicy: IfNotPresent

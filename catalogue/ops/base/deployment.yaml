@@ -13,7 +13,7 @@ spec:
       labels:
         service: catalogue
     spec:
-      serviceAccountName: robot-shop
+      serviceAccountName: default
       containers:
       - name: catalogue
         imagePullPolicy: IfNotPresent

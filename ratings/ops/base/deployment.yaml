@@ -5,7 +5,6 @@ metadata:
   labels:
     service: ratings
 spec:
-  replicas: 1
   selector:
     matchLabels:
       service: ratings
@@ -14,7 +13,7 @@ spec:
       labels:
         service: ratings
     spec:
-      serviceAccountName: robot-shop
+      serviceAccountName: default
       containers:
       - name: ratings
         imagePullPolicy: IfNotPresent

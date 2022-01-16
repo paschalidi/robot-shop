@@ -5,7 +5,6 @@ metadata:
   labels:
     service: web
 spec:
-  replicas: 1
   selector:
     matchLabels:
       service: web
@@ -14,7 +13,7 @@ spec:
       labels:
         service: web
     spec:
-      serviceAccountName: robot-shop
+      serviceAccountName: default
       containers:
       - name: web
         imagePullPolicy: IfNotPresent

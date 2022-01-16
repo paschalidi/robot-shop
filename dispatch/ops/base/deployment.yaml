@@ -13,7 +13,7 @@ spec:
       labels:
         service: dispatch
     spec:
-      serviceAccountName: robot-shop
+      serviceAccountName: default
       containers:
       - name: dispatch
         imagePullPolicy: IfNotPresent
