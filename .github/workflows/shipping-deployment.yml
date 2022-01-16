@@ -15,7 +15,7 @@ permissions:
 
 env:
   GCP_REGISTRY: 'gcr.io/robot-shop-337906'
-  IMAGE: 'robot-shop-cart'
+  IMAGE: 'robot-shop-shipping'
 
 jobs:
   release:
