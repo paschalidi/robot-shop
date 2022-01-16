@@ -27,10 +27,6 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: status.hostIP
-          {{- if .Values.payment.gateway }}
-          - name: PAYMENT_GATEWAY
-            value: {{ .Values.payment.gateway }}
-          {{- end }}
         ports:
         - containerPort: 8080
         resources:

@@ -13,9 +13,7 @@ spec:
       labels:
         service: catalogue
     spec:
-      {{ if .Values.psp.enabled }}
       serviceAccountName: robot-shop
-      {{ end }}
       containers:
       - name: catalogue
         imagePullPolicy: IfNotPresent
