@@ -39,6 +39,7 @@ jobs:
       - name: Deploy Development
         run: |-
           cd redis/ops/overlays/prod
+          ls
           kubectl get services -o wide
           kustomize build . | kubectl apply -f -
           kubectl get services -o wide
