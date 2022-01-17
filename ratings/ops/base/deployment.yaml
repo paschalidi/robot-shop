@@ -17,16 +17,16 @@ spec:
       serviceAccountName: default
       containers:
       - name: ratings
-        imagePullPolicy: IfNotPresent
-        image: gcr.io/robot-shop-337906/robot-shop-ratings
-        ports:
-          - containerPort: 3306
-          resources:
-            limits:
-              cpu: 200m
-              memory: 100Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
-          restartPolicy: Always
+      imagePullPolicy: IfNotPresent
+      image: gcr.io/robot-shop-337906/robot-shop-ratings
+      ports:
+      - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always
 status: {}
