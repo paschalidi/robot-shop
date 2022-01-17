@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - '.github/workflows/catalogue-deployment.yml'
-      - 'cart/**'
+      - 'catalogue/**'
       - '!K8s/**'
       - '!load-gen/**'
 
