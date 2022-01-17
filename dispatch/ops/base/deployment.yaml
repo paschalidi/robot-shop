@@ -5,6 +5,7 @@ metadata:
   labels:
     service: dispatch
 spec:
+  strategy: {}
   selector:
     matchLabels:
       service: dispatch
@@ -32,3 +33,4 @@ spec:
             cpu: 100m
             memory: 50Mi
       restartPolicy: Always
+status: {}

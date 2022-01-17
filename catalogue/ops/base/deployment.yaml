@@ -5,6 +5,7 @@ metadata:
   labels:
     service: catalogue
 spec:
+  strategy: {}
   selector:
     matchLabels:
       service: catalogue
@@ -33,3 +34,4 @@ spec:
             cpu: 100m
             memory: 50Mi
       restartPolicy: Always
+status: {}

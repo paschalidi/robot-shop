@@ -6,6 +6,7 @@ metadata:
     service: payment
     stage: prod
 spec:
+  strategy: {=}
   selector:
     matchLabels:
       service: payment
@@ -36,3 +37,4 @@ spec:
             cpu: 100m
             memory: 50Mi
       restartPolicy: Always
+status: {}

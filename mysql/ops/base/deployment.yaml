@@ -5,6 +5,7 @@ metadata:
   labels:
     service: mysql
 spec:
+  strategy: {}
   selector:
     matchLabels:
       service: mysql
@@ -27,8 +28,9 @@ spec:
         resources:
           limits:
             cpu: 200m
-            memory: 1024Mi
+            memory: 800Mi
           requests:
             cpu: 100m
-            memory: 700Mi
+            memory: 400Mi
       restartPolicy: Always
+status: {}

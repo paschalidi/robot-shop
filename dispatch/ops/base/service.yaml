@@ -14,3 +14,5 @@ spec:
     targetPort: 0
   selector:
     service: dispatch
+status:
+  loadBalancer: {}

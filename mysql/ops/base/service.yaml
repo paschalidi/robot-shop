@@ -11,3 +11,5 @@ spec:
     targetPort: 3306
   selector:
     service: mysql
+status:
+  loadBalancer: {}

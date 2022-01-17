@@ -5,6 +5,7 @@ metadata:
   labels:
     service: mongodb
 spec:
+  strategy: {}
   selector:
     matchLabels:
       service: mongodb
@@ -26,5 +27,6 @@ spec:
             memory: 200Mi
           requests:
             cpu: 100m
-            memory: 100Mi
+            memory: 50Mi
       restartPolicy: Always
+status: {}

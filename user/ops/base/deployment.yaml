@@ -5,6 +5,7 @@ metadata:
   labels:
     service: user
 spec:
+  strategy: {}
   selector:
     matchLabels:
       service: user
@@ -34,3 +35,4 @@ spec:
             cpu: 100m
             memory: 50Mi
       restartPolicy: Always
+status: {}

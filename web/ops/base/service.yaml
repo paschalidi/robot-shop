@@ -5,19 +5,13 @@ metadata:
   labels:
     service: web
 spec:
+  type: NodePort
   ports:
-  - name: http
+  - name: "8080"
     port: 8080
     targetPort: 8080
+    nodePort: 30080
   selector:
     service: web
-  type: LoadBalancer
----
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  name: web
-spec:
-  to:
-    kind: Service
-    name: web
+status:
+  loadBalancer: {}
