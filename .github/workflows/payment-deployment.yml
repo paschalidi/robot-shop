@@ -1,8 +1,6 @@
 name: docker-compose-actions-workflow
 on:
-  pull_request:
-    branches:
-      - '*'
+  push:
     paths:
       - '.github/workflows/payment-deployment.yml'
       - 'payment/**'
