@@ -18,7 +18,7 @@ spec:
       - name: cart
         image: gcr.io/robot-shop-337906/robot-shop-cart
         ports:
-          - containerPort: 8080
+        - containerPort: 8080
         resources:
           limits:
             cpu: 200m
@@ -26,5 +26,5 @@ spec:
           requests:
             cpu: 100m
             memory: 50Mi
-    restartPolicy: Always
+      restartPolicy: Always
 status: {}
