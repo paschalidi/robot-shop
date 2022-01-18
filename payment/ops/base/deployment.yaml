@@ -4,18 +4,15 @@ metadata:
   name: payment
   labels:
     service: payment
-    stage: prod
 spec:
-  strategy: {=}
+  strategy: {}
   selector:
     matchLabels:
       service: payment
-      stage: prod
   template:
     metadata:
       labels:
         service: payment
-        stage: prod
     spec:
       serviceAccountName: default
       containers:

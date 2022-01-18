@@ -10,6 +10,6 @@ spec:
       port: 6379
       targetPort: 6379
   selector:
-    io.kompose.service: redis
+    service: redis
 status:
   loadBalancer: {}
