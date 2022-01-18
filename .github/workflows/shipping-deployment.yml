@@ -46,7 +46,6 @@ jobs:
   deploy-prod:
     needs:
       - release
-
     name: Deploy Production Env
     runs-on: ubuntu-latest
     steps:
