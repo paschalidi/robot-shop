@@ -35,7 +35,6 @@ jobs:
         run: |-
           gcloud auth configure-docker -q
           cd user/
-          ls
           docker build \
             --cache-from $GCP_REGISTRY/$IMAGE:latest \
             -t $GCP_REGISTRY/$IMAGE:$GITHUB_SHA \
