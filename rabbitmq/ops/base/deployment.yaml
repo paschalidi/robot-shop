@@ -1,21 +1,24 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rabbitmq
   labels:
     service: rabbitmq
-    stage: prod
 spec:
-  replicas: 1
   strategy: {}
+  selector:
+    matchLabels:
+      service: redis
   template:
     metadata:
       labels:
         service: rabbitmq
     spec:
+      serviceAccountName: default
       containers:
-      - image: rabbitmq:3.7-management-alpine
-        name: rabbitmq
+      - name: rabbitmq
+        imagePullPolicy: IfNotPresent
+        image: rabbitmq:3.7-management-alpine
         ports:
         - containerPort: 5672
         - containerPort: 15672

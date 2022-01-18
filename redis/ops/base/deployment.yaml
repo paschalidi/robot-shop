@@ -1,28 +1,32 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
   labels:
     service: redis
-    stage: prod
 spec:
   strategy: {}
+  selector:
+    matchLabels:
+      service: redis
   template:
     metadata:
       labels:
         service: redis
     spec:
+      serviceAccountName: default
       containers:
-        - image: redis:4.0.6
-          name: redis
-          ports:
-            - containerPort: 6379
-          resources:
-            limits:
-              cpu: 200m
-              memory: 100Mi
-            requests:
-              cpu: 100m
-              memory: 50Mi
+      - name: redis
+        imagePullPolicy: IfNotPresent
+        image: redis:4.0.6
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
       restartPolicy: Always
 status: {}
