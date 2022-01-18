@@ -8,7 +8,7 @@ spec:
   strategy: {}
   selector:
     matchLabels:
-      service: redis
+      service: rabbitmq
   template:
     metadata:
       labels:
