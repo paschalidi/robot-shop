@@ -4,6 +4,7 @@ metadata:
   name: payment
   labels:
     service: payment
+    stage: prod
 spec:
   strategy: {}
   selector:
