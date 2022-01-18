@@ -74,7 +74,6 @@ jobs:
       - name: Deploy Development
         run: |-
           cd user/ops/overlays/prod
-          kubectl get services -o wide
           kustomize edit set image $GCP_REGISTRY/$IMAGE=$GCP_REGISTRY/$IMAGE:$GITHUB_SHA
           kustomize build . | kubectl apply -f -
           kubectl get services -o wide

@@ -39,7 +39,5 @@ jobs:
       - name: Deploy Development
         run: |-
           cd rabbitmq/ops/overlays/prod
-          ls
-          kubectl get services -o wide
           kustomize build . | kubectl apply -f -
           kubectl get services -o wide
